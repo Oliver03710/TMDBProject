@@ -61,16 +61,24 @@
 		AD6702D62899F6C80049E2E8 /* TMDBProject */ = {
 			isa = PBXGroup;
 			children = (
+				AD6702F02899FA600049E2E8 /* Key */,
 				AD6702D72899F6C80049E2E8 /* AppDelegate.swift */,
 				AD6702D92899F6C80049E2E8 /* SceneDelegate.swift */,
 				AD6702DD2899F6C80049E2E8 /* Main.storyboard */,
 				AD6702DB2899F6C80049E2E8 /* ViewController.swift */,
-				AD6702ED2899F88E0049E2E8 /* APIKey.swift */,
 				AD6702E02899F6C90049E2E8 /* Assets.xcassets */,
 				AD6702E22899F6C90049E2E8 /* LaunchScreen.storyboard */,
 				AD6702E52899F6C90049E2E8 /* Info.plist */,
 			);
 			path = TMDBProject;
+			sourceTree = "<group>";
+		};
+		AD6702F02899FA600049E2E8 /* Key */ = {
+			isa = PBXGroup;
+			children = (
+				AD6702ED2899F88E0049E2E8 /* APIKey.swift */,
+			);
+			path = Key;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -18,6 +18,8 @@
 		AD6C0D50289AB36200BC54D3 /* HeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6C0D4E289AB36200BC54D3 /* HeaderReusableView.swift */; };
 		AD6C0D51289AB36200BC54D3 /* HeaderReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD6C0D4F289AB36200BC54D3 /* HeaderReusableView.xib */; };
 		AD6C0D53289AC67D00BC54D3 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6C0D52289AC67D00BC54D3 /* UIView+Extension.swift */; };
+		AD8F26D2289BE51B00A5D4D7 /* DetailMovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8F26D0289BE51B00A5D4D7 /* DetailMovieTableViewCell.swift */; };
+		AD8F26D3289BE51B00A5D4D7 /* DetailMovieTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD8F26D1289BE51B00A5D4D7 /* DetailMovieTableViewCell.xib */; };
 		ADF00874289A685E00849163 /* TMDBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF00873289A685E00849163 /* TMDBViewController.swift */; };
 		ADF00877289A690500849163 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = ADF00876289A690500849163 /* Kingfisher */; };
 		ADF0087A289A691300849163 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = ADF00879289A691300849163 /* Alamofire */; };
@@ -43,6 +45,8 @@
 		AD6C0D4E289AB36200BC54D3 /* HeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderReusableView.swift; sourceTree = "<group>"; };
 		AD6C0D4F289AB36200BC54D3 /* HeaderReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeaderReusableView.xib; sourceTree = "<group>"; };
 		AD6C0D52289AC67D00BC54D3 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		AD8F26D0289BE51B00A5D4D7 /* DetailMovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieTableViewCell.swift; sourceTree = "<group>"; };
+		AD8F26D1289BE51B00A5D4D7 /* DetailMovieTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailMovieTableViewCell.xib; sourceTree = "<group>"; };
 		ADF00873289A685E00849163 /* TMDBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBViewController.swift; sourceTree = "<group>"; };
 		ADF0087F289A6A5A00849163 /* TMDBCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBCollectionViewCell.swift; sourceTree = "<group>"; };
 		ADF00880289A6A5A00849163 /* TMDBCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TMDBCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -112,8 +116,10 @@
 				AD6702DD2899F6C80049E2E8 /* Main.storyboard */,
 				ADF00880289A6A5A00849163 /* TMDBCollectionViewCell.xib */,
 				AD6C0D4F289AB36200BC54D3 /* HeaderReusableView.xib */,
+				AD8F26D1289BE51B00A5D4D7 /* DetailMovieTableViewCell.xib */,
 				ADF0088B289A733800849163 /* TMDBData.swift */,
 				ADF00873289A685E00849163 /* TMDBViewController.swift */,
+				AD8F26D0289BE51B00A5D4D7 /* DetailMovieTableViewCell.swift */,
 				ADF0087F289A6A5A00849163 /* TMDBCollectionViewCell.swift */,
 				AD6C0D4C289AB15F00BC54D3 /* HeaderCollectionViewFlowLayout.swift */,
 				AD6C0D4E289AB36200BC54D3 /* HeaderReusableView.swift */,
@@ -206,6 +212,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD8F26D3289BE51B00A5D4D7 /* DetailMovieTableViewCell.xib in Resources */,
 				AD6C0D51289AB36200BC54D3 /* HeaderReusableView.xib in Resources */,
 				ADF00882289A6A5A00849163 /* TMDBCollectionViewCell.xib in Resources */,
 				AD6702EC2899F7D30049E2E8 /* .gitignore in Resources */,
@@ -225,6 +232,7 @@
 				AD6C0D53289AC67D00BC54D3 /* UIView+Extension.swift in Sources */,
 				AD6702D82899F6C80049E2E8 /* AppDelegate.swift in Sources */,
 				ADF00874289A685E00849163 /* TMDBViewController.swift in Sources */,
+				AD8F26D2289BE51B00A5D4D7 /* DetailMovieTableViewCell.swift in Sources */,
 				AD6C0D50289AB36200BC54D3 /* HeaderReusableView.swift in Sources */,
 				ADF0088C289A733800849163 /* TMDBData.swift in Sources */,
 				AD6702EE2899F88E0049E2E8 /* APIKey.swift in Sources */,

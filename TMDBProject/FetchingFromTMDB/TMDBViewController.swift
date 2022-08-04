@@ -17,7 +17,8 @@ class TMDBViewController: UIViewController {
     
     @IBOutlet weak var tmdbCollectionView: UICollectionView!
     
-    var list: [TMDB] = []
+    var movieList: [TMDB] = []
+    var actorList: [Int: [String]] = [:]
     
     // MARK: - Init
     
@@ -43,7 +44,7 @@ class TMDBViewController: UIViewController {
 
     func fetchingData() {
         
-        let url = EndPoint.TMDBUrl + "\(MediaType.movie.rawValue)/\(TimeWindow.day.rawValue)?api_key=\(APIKey.TMDB.rawValue)"
+        let url = EndPoint.TMDBUrl + "trending/\(MediaType.movie.rawValue)/\(TimeWindow.day.rawValue)?api_key=\(APIKey.TMDB.rawValue)"
         
         AF.request(url, method: .get).validate(statusCode: 200...400).responseJSON { [self] response in
             switch response.result {
@@ -57,18 +58,58 @@ class TMDBViewController: UIViewController {
                     let image = item["poster_path"].stringValue
                     let vote = item["vote_average"].doubleValue
                     let date = item["release_date"].stringValue
+                    let genre = item["genre_ids"][0].intValue
+                    let movieId = item["id"].intValue
                     
+                    fetchingActorData(movieID: movieId)
                     guard let url = URL(string: "https://image.tmdb.org/t/p/original" + image) else { return }
                     
-                    let data = TMDB(name: name, image: url, vote: vote, releaseDate: date)
+                    let data = TMDB(name: name, image: url, vote: vote, releaseDate: date, movieID: movieId, genre: genre)
                     
-                    self.list.append(data)
+                    self.movieList.append(data)
+                    
+                    
                 }
                 
                 tmdbCollectionView.reloadData()
                 
-                print(self.list)
-                print(self.list.count)
+                print(self.movieList)
+                print(self.movieList.count)
+
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+
+    }
+    
+    
+    func fetchingActorData(movieID: Int) {
+     
+        let url2 = EndPoint.TMDBUrl + "\(MediaType.movie.rawValue)/\(movieID)/credits?api_key=\(APIKey.TMDB.rawValue)&language=en-US"
+        
+        AF.request(url2, method: .get).validate(statusCode: 200...400).responseJSON { [self] response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                print("JSON: \(json)")
+                
+                for item in json["cast"].arrayValue {
+                    
+                    let actor = item["name"].stringValue
+                    
+                    var arrays: [String] = []
+                    arrays.append(actor)
+                    
+                    self.actorList.updateValue(arrays, forKey: movieID)
+
+                }
+                
+                tmdbCollectionView.reloadData()
+                
+                print(self.actorList)
+                print(self.actorList.count)
 
             case .failure(let error):
                 print(error)
@@ -84,17 +125,17 @@ class TMDBViewController: UIViewController {
 extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return list.count
+        return movieList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        for i in 0...list.count {
+        for i in 0...movieList.count {
             if section == i {
                 return 1
             }
         }
-        return list.count
+        return movieList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -103,7 +144,7 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         for i in 0...indexPath.section {
             
-            cell.movieImageView.kf.setImage(with: list[i].image)
+            cell.movieImageView.kf.setImage(with: movieList[i].image)
             cell.movieImageView.contentMode = .scaleAspectFill
             cell.movieImageView.clipsToBounds = true
             cell.movieImageView.layer.cornerRadius = 10
@@ -120,11 +161,16 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             cell.buttonView.backgroundColor = .clear
             
-            cell.titleLabel.text = list[i].name
+            cell.titleLabel.text = movieList[i].name
             cell.titleLabel.textAlignment = .left
             cell.titleLabel.font = .systemFont(ofSize: 20)
             
-            cell.actorLabel.text = list[i].name
+            if let actors = actorList[movieList[i].movieID] {
+                actors.forEach {
+                    cell.actorLabel.text! = $0
+                }
+            }
+
             cell.actorLabel.textAlignment = .left
             cell.actorLabel.font = .systemFont(ofSize: 16)
             cell.actorLabel.textColor = .darkGray
@@ -153,6 +199,11 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let height: CGFloat = 50
         return CGSize(width: width, height: height)
         
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
     }
   
     

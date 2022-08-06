@@ -17,23 +17,51 @@ class TMDBViewController: UIViewController {
     
     @IBOutlet weak var tmdbCollectionView: UICollectionView!
     
-    var movieList: [TMDB] = []
-    var actorList: [Int: [String]] = [:]
+    var movieList: [MovieData] = []
+    
+    var actorName: [Int: [String]] = [:]
+    var characterName: [Int: [String]] = [:]
+    var actorProfile: [Int: [String]] = [:]
+    
     var pages = 1
+    var totalPages = 0
     
     // MARK: - Init
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavi()
         configureCollectionView()
-        fetchingData(num: pages)
         setCells(collectionView: tmdbCollectionView)
+        fetchingMovieData(num: pages)
+    }
+    
+    
+    // MARK: - Selectors
+    
+    @objc func fetching() {
+        
     }
     
     
     // MARK: - Helper Functions
     
+    func configureNavi() {
+        
+        let barAppearance = UINavigationBarAppearance()
+        barAppearance.backgroundColor = .white
+        navigationItem.scrollEdgeAppearance = barAppearance
+        
+        navigationItem.title = "MY MEDIA"
+        self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "magnifyingglass", style: .plain, target: self, action: #selector(fetching))
+
+    }
+    
+    
     func configureCollectionView() {
+        tmdbCollectionView.prefetchDataSource = self
         tmdbCollectionView.delegate = self
         tmdbCollectionView.dataSource = self
         tmdbCollectionView.register(UINib(nibName: TMDBCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: TMDBCollectionViewCell.identifier)
@@ -43,72 +71,42 @@ class TMDBViewController: UIViewController {
     
     // MARK: - Networking
 
-    func fetchingData(num: Int) {
+    func fetchingMovieData(num: Int) {
         
-        let url = EndPoint.TMDBUrl + "trending/\(MediaType.movie.rawValue)/\(TimeWindow.day.rawValue)?api_key=\(APIKey.TMDB.rawValue)&page=\(num)"
-        
-        AF.request(url, method: .get).validate(statusCode: 200...400).responseJSON { [self] response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-//                print("JSON: \(json)")
-                
-                for item in json["results"].arrayValue {
-                    
-                    let name = item["title"].stringValue
-                    let image = item["poster_path"].stringValue
-                    let vote = item["vote_average"].doubleValue
-                    let date = item["release_date"].stringValue
-                    let genre = item["genre_ids"][0].intValue
-                    let movieId = item["id"].intValue
-                    
-                    guard let url = URL(string: "https://image.tmdb.org/t/p/original" + image) else { return }
-                    
-                    let data = TMDB(name: name, image: url, vote: vote, releaseDate: date, movieID: movieId, genre: genre)
-                    
-                    self.movieList.append(data)
-                    fetchingActorData(movieID: movieList[movieList.count - 1].movieID)
-                }
-                
-                tmdbCollectionView.reloadData()
-
-            case .failure(let error):
-                print(error)
+        SearchingMovieManager.shared.fetchMovieData(startPage: num) { totalPages, movieData in
+            
+            self.totalPages = totalPages
+            self.movieList.append(contentsOf: movieData)
+            
+            self.fetchingActorData()
+            
+            DispatchQueue.main.async {
+                self.tmdbCollectionView.reloadData()
             }
-        }
-    
-    }
-    
-
-    func fetchingActorData(movieID: Int) {
-        
-        var arr: [String] = []
-     
-        let url2 = EndPoint.TMDBUrl + "\(MediaType.movie.rawValue)/\(movieID)/credits?api_key=\(APIKey.TMDB.rawValue)&language=en-US"
-        
-        AF.request(url2, method: .get).validate(statusCode: 200...400).responseJSON { [self] response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-//                print("JSON: \(json)")
-                
-                for item in json["cast"].arrayValue {
-                    
-                    let actor = item["name"].stringValue
-                    
-                    arr.append(actor)
-                    
-                    self.actorList.updateValue(arr, forKey: movieID)
-                }
-
-                tmdbCollectionView.reloadData()
-
-            case .failure(let error):
-                print(error)
-            }
+            
         }
     }
 
+    
+    func fetchingActorData() {
+        
+        for item in 0..<self.movieList.count {
+            
+            SearchingCastManager.shared.fetchingActorData(movieID: self.movieList[item].movieId) { actorData in
+                
+                self.actorName.updateValue(actorData.name, forKey: self.movieList[item].movieId)
+                self.characterName.updateValue(actorData.character, forKey: self.movieList[item].movieId)
+                self.actorProfile.updateValue(actorData.profile, forKey: self.movieList[item].movieId)
+                print(self.actorName)
+                
+                DispatchQueue.main.async {
+                    self.tmdbCollectionView.reloadData()
+                }
+            }
+        }
+        
+    }
+    
 }
 
 
@@ -117,22 +115,21 @@ extension TMDBViewController: UICollectionViewDataSourcePrefetching {
     // 셀이 화면에 보이기 직전에 필요한 리소스를 미리 다운 받는 기능
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         
-//        for indexPath in indexPaths {
-//            if imageArr.count - 1 == indexPath.row, imageArr.count < totalCount {
+        for indexPath in indexPaths {
+            if movieList.count - 1 == indexPath.section, movieList.count < totalPages {
                 pages += 1
-//
-//                guard let text = searchBar.text else { return }
-                fetchingActorData(movieID: pages)
-//        }
-        print("=============\(indexPaths)==============")
+                fetchingMovieData(num: pages)
+            }
+            print("=============\(indexPaths)==============")
+            
+        }
+        
+        // 작업 취소시
+        func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
+            print("====취소======\(indexPaths)======취소=====")
+        }
         
     }
-    
-    // 작업 취소시
-    func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-        print("====취소======\(indexPaths)======취소=====")
-    }
-    
 }
 
 
@@ -145,20 +142,14 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        for i in 0...movieList.count {
-            if section == i {
-                return 1
-            }
-        }
-        return movieList.count
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TMDBCollectionViewCell.identifier, for: indexPath) as? TMDBCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.movieImageView.kf.setImage(with: movieList[indexPath.section].image)
+        cell.movieImageView.kf.setImage(with: URL(string: movieList[indexPath.section].mainImage))
         cell.movieImageView.contentMode = .scaleAspectFill
         cell.movieImageView.clipsToBounds = true
         cell.movieImageView.layer.cornerRadius = 10
@@ -175,14 +166,12 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         cell.buttonView.backgroundColor = .clear
         
-        cell.titleLabel.text = movieList[indexPath.section].name
+        cell.titleLabel.text = movieList[indexPath.section].title
         cell.titleLabel.textAlignment = .left
         cell.titleLabel.font = .systemFont(ofSize: 20)
         
-        if let actors = actorList[movieList[indexPath.section].movieID] {
-            cell.actorLabel.text = actors.joined(separator: ", ")
-        }
-        
+
+        cell.actorLabel.text = actorName[movieList[indexPath.section].movieId]?.joined(separator: ", ")
         cell.actorLabel.textAlignment = .left
         cell.actorLabel.font = .systemFont(ofSize: 16)
         cell.actorLabel.textColor = .darkGray
@@ -215,10 +204,21 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(actorList)
+        
+        tmdbCollectionView.deselectItem(at: indexPath, animated: true)
+        
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        
+        guard let vc = sb.instantiateViewController(withIdentifier: DetailViewController.identifier) as? DetailViewController else { return }
+        
+        vc.movieData = movieList[indexPath.section]
+    
+        guard let name = actorName[movieList[indexPath.section].movieId], let character = characterName[movieList[indexPath.section].movieId], let profile = actorProfile[movieList[indexPath.section].movieId] else { return }
+        vc.actorName = name
+        vc.characterName = character
+        vc.actorProfile = profile
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
   
-    
 }
-
-

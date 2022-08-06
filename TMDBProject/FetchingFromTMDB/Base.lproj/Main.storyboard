@@ -46,10 +46,10 @@
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="116.51785714285714"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail View Controller-->
         <scene sceneID="MzM-NT-Vih">
             <objects>
-                <viewController id="RA5-yi-zeF" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" id="RA5-yi-zeF" customClass="DetailViewController" customModule="TMDBProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oaN-Kg-NIH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -68,6 +68,9 @@
                             <constraint firstItem="tjA-H1-3Sq" firstAttribute="leading" secondItem="s2z-y4-8cC" secondAttribute="leading" id="xL9-qp-eqr"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="detailTableView" destination="tjA-H1-3Sq" id="1Re-Qr-29d"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cz1-d4-vmC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

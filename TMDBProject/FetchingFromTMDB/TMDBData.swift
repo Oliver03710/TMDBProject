@@ -7,20 +7,24 @@
 
 import Foundation
 
-struct TMDB {
+struct MovieData {
     
-    let name: String
-    let image: URL
-    let vote: Double
+    let title: String
+    let mainImage: String
+    let backImage: String
     let releaseDate: String
-    let movieID: Int
+    let vote: Double
+    let movieId: Int
     let genre: Int
+    let overView: String
     
 }
 
-struct TMDBActor {
+struct ActorData {
     
-    let nameDIC: [Int: [String]]
+    let name: [String]
+    let character: [String]
+    let profile: [String]
     
 }
 

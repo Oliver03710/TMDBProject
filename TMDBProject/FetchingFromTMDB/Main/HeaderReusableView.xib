@@ -49,7 +49,7 @@
                 <constraint firstItem="esb-Mg-8Ja" firstAttribute="top" secondItem="VXr-Tz-HHm" secondAttribute="top" id="wDq-KC-wcY"/>
             </constraints>
             <connections>
-                <outlet property="headerView" destination="esb-Mg-8Ja" id="zLf-I1-HBU"/>
+                <outlet property="headerView" destination="esb-Mg-8Ja" id="kXN-S5-7H9"/>
             </connections>
             <point key="canvasLocation" x="181.15942028985509" y="175.11160714285714"/>
         </collectionReusableView>

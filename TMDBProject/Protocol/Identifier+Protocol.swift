@@ -26,3 +26,11 @@ extension UICollectionViewCell: IdentifierProtocol {
     }
     
 }
+
+extension UITableViewCell: IdentifierProtocol {
+    
+    static var identifier: String {
+            return String(describing: self)
+    }
+    
+}

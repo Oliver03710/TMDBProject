@@ -9,6 +9,7 @@ import UIKit
 
 class DetailMovieTableViewCell: UITableViewCell {
 
-
+    @IBOutlet weak var mainLabel: UILabel!
+    
     
 }

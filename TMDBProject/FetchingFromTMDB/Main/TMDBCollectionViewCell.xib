@@ -96,18 +96,78 @@
                                     <constraint firstItem="Zgm-sG-279" firstAttribute="top" secondItem="DuY-ry-jb4" secondAttribute="top" id="zbH-Bm-zCA"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLE-ui-tom">
+                                <rect key="frame" x="10" y="239.5" width="61.5" height="20.5"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uAn-sD-M3x">
+                                        <rect key="frame" x="0.0" y="0.0" width="31" height="20.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="평점" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kdP-eJ-EPq">
+                                                <rect key="frame" x="0.0" y="0.0" width="31" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                                        <constraints>
+                                            <constraint firstItem="kdP-eJ-EPq" firstAttribute="leading" secondItem="uAn-sD-M3x" secondAttribute="leading" id="NwW-6B-UtI"/>
+                                            <constraint firstAttribute="trailing" secondItem="kdP-eJ-EPq" secondAttribute="trailing" id="OL2-0r-wjb"/>
+                                            <constraint firstItem="kdP-eJ-EPq" firstAttribute="top" secondItem="uAn-sD-M3x" secondAttribute="top" id="bwt-6l-wjd"/>
+                                            <constraint firstAttribute="bottom" secondItem="kdP-eJ-EPq" secondAttribute="bottom" id="jzn-jS-y52"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9.9" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nMe-gy-OeC">
+                                        <rect key="frame" x="31" y="0.0" width="30.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="nMe-gy-OeC" firstAttribute="top" secondItem="iLE-ui-tom" secondAttribute="top" id="3df-n9-2Vr"/>
+                                    <constraint firstAttribute="width" secondItem="iLE-ui-tom" secondAttribute="height" multiplier="3" id="7mc-IC-3IZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="nMe-gy-OeC" secondAttribute="bottom" id="CME-7n-b8M"/>
+                                    <constraint firstItem="nMe-gy-OeC" firstAttribute="leading" secondItem="uAn-sD-M3x" secondAttribute="trailing" id="D0f-RF-QcI"/>
+                                    <constraint firstItem="uAn-sD-M3x" firstAttribute="width" secondItem="iLE-ui-tom" secondAttribute="width" multiplier="0.5" id="K2z-08-YHS"/>
+                                    <constraint firstAttribute="trailing" secondItem="nMe-gy-OeC" secondAttribute="trailing" id="bkP-GR-WFp"/>
+                                    <constraint firstItem="uAn-sD-M3x" firstAttribute="leading" secondItem="iLE-ui-tom" secondAttribute="leading" id="hyc-rd-XHM"/>
+                                    <constraint firstItem="uAn-sD-M3x" firstAttribute="top" secondItem="iLE-ui-tom" secondAttribute="top" id="lua-zW-TYZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="uAn-sD-M3x" secondAttribute="bottom" id="wxG-NT-hsl"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PHX-WO-b37">
+                                <rect key="frame" x="339" y="10" width="32" height="32"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="MeC-cl-OzJ"/>
+                                    <constraint firstAttribute="width" constant="32" id="NJf-5L-kCT"/>
+                                    <constraint firstAttribute="width" secondItem="PHX-WO-b37" secondAttribute="height" id="okP-oj-dR0"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="paperclip" catalog="system">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBrownColor"/>
                         <constraints>
                             <constraint firstItem="343-Fe-Nek" firstAttribute="centerX" secondItem="MqO-11-hTl" secondAttribute="centerX" id="1ES-OK-wpe"/>
+                            <constraint firstItem="343-Fe-Nek" firstAttribute="top" secondItem="iLE-ui-tom" secondAttribute="bottom" constant="10" id="7Nl-Se-KYC"/>
                             <constraint firstItem="MqO-11-hTl" firstAttribute="leading" secondItem="gaQ-uk-DoG" secondAttribute="leading" id="CCf-be-ofB"/>
+                            <constraint firstItem="iLE-ui-tom" firstAttribute="leading" secondItem="gaQ-uk-DoG" secondAttribute="leading" constant="10" id="Dpp-XO-gJN"/>
                             <constraint firstItem="343-Fe-Nek" firstAttribute="leading" secondItem="gaQ-uk-DoG" secondAttribute="leading" id="Kqp-Mv-ntb"/>
                             <constraint firstItem="MqO-11-hTl" firstAttribute="top" secondItem="gaQ-uk-DoG" secondAttribute="top" id="Sgr-iu-8xP"/>
+                            <constraint firstAttribute="trailing" secondItem="PHX-WO-b37" secondAttribute="trailing" constant="10" id="Tk8-Xx-kbo"/>
                             <constraint firstAttribute="bottom" secondItem="MqO-11-hTl" secondAttribute="bottom" id="W8k-jk-ihd"/>
                             <constraint firstAttribute="trailing" secondItem="MqO-11-hTl" secondAttribute="trailing" id="aT9-He-3dV"/>
                             <constraint firstAttribute="trailing" secondItem="343-Fe-Nek" secondAttribute="trailing" id="kcW-Hv-qrt"/>
+                            <constraint firstItem="iLE-ui-tom" firstAttribute="height" secondItem="U8F-JS-ogv" secondAttribute="height" id="nE7-pM-rxO"/>
                             <constraint firstAttribute="height" constant="400" id="uRP-wN-UoJ"/>
                             <constraint firstAttribute="bottom" secondItem="343-Fe-Nek" secondAttribute="bottom" id="uYt-qC-w9z"/>
+                            <constraint firstItem="PHX-WO-b37" firstAttribute="top" secondItem="gaQ-uk-DoG" secondAttribute="top" constant="10" id="wQU-DJ-yB5"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -123,15 +183,18 @@
                 <outlet property="actorLabel" destination="eh8-Vd-eDw" id="f5g-Z3-tiD"/>
                 <outlet property="baseView" destination="gaQ-uk-DoG" id="91k-wB-ad5"/>
                 <outlet property="buttonView" destination="Zgm-sG-279" id="DG6-bJ-yqb"/>
+                <outlet property="linkButton" destination="PHX-WO-b37" id="iPv-5z-GXv"/>
                 <outlet property="movieImageView" destination="MqO-11-hTl" id="Cf5-OC-C8Y"/>
                 <outlet property="titleLabel" destination="U8F-JS-ogv" id="iE2-qg-Hxc"/>
                 <outlet property="upperVIew" destination="343-Fe-Nek" id="qWI-gD-idH"/>
+                <outlet property="voteLabel" destination="nMe-gy-OeC" id="y1K-sD-02q"/>
             </connections>
             <point key="canvasLocation" x="377.536231884058" y="199.55357142857142"/>
         </collectionViewCell>
     </objects>
     <resources>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
+        <image name="paperclip" catalog="system" width="121" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
@@ -140,6 +203,9 @@
         </systemColor>
         <systemColor name="systemBrownColor">
             <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

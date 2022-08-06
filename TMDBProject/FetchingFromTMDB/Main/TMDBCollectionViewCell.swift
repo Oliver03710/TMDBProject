@@ -18,4 +18,8 @@ class TMDBCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var actorLabel: UILabel!
 
+    @IBOutlet weak var linkButton: UIButton!
+    
+    @IBOutlet weak var voteLabel: UILabel!
+    
 }

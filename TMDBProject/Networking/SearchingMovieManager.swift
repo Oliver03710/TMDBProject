@@ -43,6 +43,7 @@ class SearchingMovieManager {
                 var data: [MovieData] = []
                 
                 for i in 0..<title.count {
+                    
                     data.append(MovieData(title: title[i], mainImage: mainImage[i], backImage: backImage[i], releaseDate: releaseDate[i], vote: vote[i], movieId: movieId[i], genre: genre[i], overView: overView[i]))
                 }
                 

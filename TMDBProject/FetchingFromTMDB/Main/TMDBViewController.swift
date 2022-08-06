@@ -22,9 +22,11 @@ class TMDBViewController: UIViewController {
     var actorName: [Int: [String]] = [:]
     var characterName: [Int: [String]] = [:]
     var actorProfile: [Int: [String]] = [:]
+    var movieLink: String = ""
     
     var pages = 1
     var totalPages = 0
+    
     
     // MARK: - Init
     
@@ -39,7 +41,14 @@ class TMDBViewController: UIViewController {
     
     // MARK: - Selectors
     
-    @objc func fetching() {
+    @objc func moveToYouTube(sender: UIButton) {
+        
+        fetchingMovieLinkData(num: movieList[sender.tag].movieId)
+        
+    }
+    
+    
+    @objc func doNothing() {
         
     }
     
@@ -55,7 +64,7 @@ class TMDBViewController: UIViewController {
         navigationItem.title = "MY MEDIA"
         self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(fetching))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(doNothing))
 
     }
     
@@ -106,8 +115,29 @@ class TMDBViewController: UIViewController {
         
     }
     
+    
+    func fetchingMovieLinkData(num : Int) {
+            
+            SearchingYouTubeManager.shared.fetchingMovieLinkData(movieID: num) { link in
+                
+                self.movieLink = link
+                
+                let sb = UIStoryboard(name: "Main", bundle: nil)
+                
+                guard let vc = sb.instantiateViewController(withIdentifier: WebViewSearchController.identifier) as? WebViewSearchController else { return }
+                
+                vc.destinationURL = self.movieLink
+                
+                DispatchQueue.main.async {
+                    self.tmdbCollectionView.reloadData()
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+    }
 }
 
+
+// MARK: - Extension: UICollectionViewDataSourcePrefetching
 
 extension TMDBViewController: UICollectionViewDataSourcePrefetching {
     
@@ -173,8 +203,15 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.actorLabel.textAlignment = .left
         cell.actorLabel.font = .systemFont(ofSize: 16)
         cell.actorLabel.textColor = .darkGray
+        
+        cell.voteLabel.text = "\(Double(round(movieList[indexPath.section].vote * 10)) / 10)"
+        
+        cell.linkButton.clipsToBounds = true
+        cell.linkButton.layer.cornerRadius = cell.linkButton.layer.bounds.height / 2
+        cell.linkButton.addTarget(self, action: #selector(moveToYouTube(sender:)), for: .touchUpInside)
+        cell.linkButton.tag = indexPath.section
 
- 
+        
         return cell
     }
     
@@ -184,9 +221,10 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
         case UICollectionView.elementKindSectionHeader:
             
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderReusableView", for: indexPath) as? HeaderReusableView else { return UICollectionReusableView() }
-
-            headerView.releaseDate.text = movieList[indexPath.section].releaseDate
-//            headerView.genreLabel.text = movieList[indexPath.section].genre
+            
+            headerView.releaseDate.text = DateHelper.changeDateFormat(dateString: movieList[indexPath.section].releaseDate, fromFormat: "yyyy-MM-dd", toFormat: "yyyy년 MM월 dd일")
+            
+            headerView.genreLabel.text = "#\(GenreHelper.shared.checkingGenre(genreNum: movieList[indexPath.section].genre))"
             
             return headerView
         default:

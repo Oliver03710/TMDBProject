@@ -10,4 +10,7 @@ import UIKit
 class HeaderReusableView: UICollectionReusableView {
         
     @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var releaseDate: UILabel!
+    @IBOutlet weak var genreLabel: UILabel!
+    
 }

@@ -9,7 +9,9 @@ import UIKit
 
 class DetailMovieTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var mainLabel: UILabel!
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var realNameLabel: UILabel!
+    @IBOutlet weak var characterLabel: UILabel!
     
     
 }

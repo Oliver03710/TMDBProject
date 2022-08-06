@@ -22,6 +22,9 @@
 		AD7827C8289E432400E52C9B /* HeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7827C7289E432400E52C9B /* HeaderReusableView.swift */; };
 		AD8F26D2289BE51B00A5D4D7 /* DetailMovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8F26D0289BE51B00A5D4D7 /* DetailMovieTableViewCell.swift */; };
 		AD8F26D3289BE51B00A5D4D7 /* DetailMovieTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD8F26D1289BE51B00A5D4D7 /* DetailMovieTableViewCell.xib */; };
+		ADC5B108289E561B00B85511 /* OverViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5B106289E561B00B85511 /* OverViewTableViewCell.swift */; };
+		ADC5B109289E561B00B85511 /* OverViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADC5B107289E561B00B85511 /* OverViewTableViewCell.xib */; };
+		ADC5B10B289E5FD700B85511 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5B10A289E5FD700B85511 /* UIButton+Extension.swift */; };
 		ADCE065D289C03850034246E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCE065C289C03850034246E /* DetailViewController.swift */; };
 		ADF00874289A685E00849163 /* TMDBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF00873289A685E00849163 /* TMDBViewController.swift */; };
 		ADF00877289A690500849163 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = ADF00876289A690500849163 /* Kingfisher */; };
@@ -52,6 +55,9 @@
 		AD7827C7289E432400E52C9B /* HeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderReusableView.swift; sourceTree = "<group>"; };
 		AD8F26D0289BE51B00A5D4D7 /* DetailMovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieTableViewCell.swift; sourceTree = "<group>"; };
 		AD8F26D1289BE51B00A5D4D7 /* DetailMovieTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailMovieTableViewCell.xib; sourceTree = "<group>"; };
+		ADC5B106289E561B00B85511 /* OverViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverViewTableViewCell.swift; sourceTree = "<group>"; };
+		ADC5B107289E561B00B85511 /* OverViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverViewTableViewCell.xib; sourceTree = "<group>"; };
+		ADC5B10A289E5FD700B85511 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		ADCE065C289C03850034246E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		ADF00873289A685E00849163 /* TMDBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBViewController.swift; sourceTree = "<group>"; };
 		ADF0087F289A6A5A00849163 /* TMDBCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -142,7 +148,9 @@
 			isa = PBXGroup;
 			children = (
 				AD8F26D1289BE51B00A5D4D7 /* DetailMovieTableViewCell.xib */,
+				ADC5B107289E561B00B85511 /* OverViewTableViewCell.xib */,
 				ADCE065C289C03850034246E /* DetailViewController.swift */,
+				ADC5B106289E561B00B85511 /* OverViewTableViewCell.swift */,
 				AD8F26D0289BE51B00A5D4D7 /* DetailMovieTableViewCell.swift */,
 			);
 			path = DetailView;
@@ -173,6 +181,7 @@
 			children = (
 				ADF00889289A6E7100849163 /* UIViewController+Extension.swift */,
 				AD6C0D52289AC67D00BC54D3 /* UIView+Extension.swift */,
+				ADC5B10A289E5FD700B85511 /* UIButton+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -249,6 +258,7 @@
 				AD6C0D51289AB36200BC54D3 /* HeaderReusableView.xib in Resources */,
 				ADF00882289A6A5A00849163 /* TMDBCollectionViewCell.xib in Resources */,
 				AD6702EC2899F7D30049E2E8 /* .gitignore in Resources */,
+				ADC5B109289E561B00B85511 /* OverViewTableViewCell.xib in Resources */,
 				AD6702E42899F6C90049E2E8 /* LaunchScreen.storyboard in Resources */,
 				AD6702E12899F6C90049E2E8 /* Assets.xcassets in Resources */,
 				AD6702DF2899F6C80049E2E8 /* Main.storyboard in Resources */,
@@ -262,8 +272,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADC5B108289E561B00B85511 /* OverViewTableViewCell.swift in Sources */,
 				ADCE065D289C03850034246E /* DetailViewController.swift in Sources */,
 				AD6C0D53289AC67D00BC54D3 /* UIView+Extension.swift in Sources */,
+				ADC5B10B289E5FD700B85511 /* UIButton+Extension.swift in Sources */,
 				AD7827C8289E432400E52C9B /* HeaderReusableView.swift in Sources */,
 				AD154B49289D004700D6779C /* SearchingMovieManager.swift in Sources */,
 				AD6702D82899F6C80049E2E8 /* AppDelegate.swift in Sources */,

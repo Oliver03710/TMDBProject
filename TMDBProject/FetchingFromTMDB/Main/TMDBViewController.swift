@@ -55,7 +55,7 @@ class TMDBViewController: UIViewController {
         navigationItem.title = "MY MEDIA"
         self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "magnifyingglass", style: .plain, target: self, action: #selector(fetching))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(fetching))
 
     }
     
@@ -97,7 +97,6 @@ class TMDBViewController: UIViewController {
                 self.actorName.updateValue(actorData.name, forKey: self.movieList[item].movieId)
                 self.characterName.updateValue(actorData.character, forKey: self.movieList[item].movieId)
                 self.actorProfile.updateValue(actorData.profile, forKey: self.movieList[item].movieId)
-                print(self.actorName)
                 
                 DispatchQueue.main.async {
                     self.tmdbCollectionView.reloadData()
@@ -120,13 +119,12 @@ extension TMDBViewController: UICollectionViewDataSourcePrefetching {
                 pages += 1
                 fetchingMovieData(num: pages)
             }
-            print("=============\(indexPaths)==============")
             
         }
         
         // 작업 취소시
         func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
-            print("====취소======\(indexPaths)======취소=====")
+            
         }
         
     }
@@ -187,6 +185,9 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderReusableView", for: indexPath) as? HeaderReusableView else { return UICollectionReusableView() }
 
+            headerView.releaseDate.text = movieList[indexPath.section].releaseDate
+//            headerView.genreLabel.text = movieList[indexPath.section].genre
+            
             return headerView
         default:
             assert(false, "Invalid element type")

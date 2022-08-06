@@ -19,23 +19,75 @@ class DetailViewController: UIViewController {
     var characterName: [String] = []
     var actorProfile: [String] = []
     
+    var shouldCellBeExpanded: Bool = false
+    var indexOfExpendedCell: Int = 0
+    
     
     // MARK: - Init
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        detailTableView.delegate = self
-        detailTableView.dataSource = self
-        detailTableView.register(UINib(nibName: DetailMovieTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: DetailMovieTableViewCell.identifier)
-        detailTableView.register(UINib(nibName: "HeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "HeaderView")
+        configureNavi()
+        configureTableView()
     }
+    
+    
+    // MARK: - Selectors
+    
+    @objc func expandButtonAction(button: UIButton) {
+
+        button.isSelected = !button.isSelected
+        
+        if button.isSelected {
+            
+            indexOfExpendedCell = button.tag
+            shouldCellBeExpanded = true
+
+            self.detailTableView.reloadRows(at: [IndexPath(item: indexOfExpendedCell + 1, section: 1)], with: .fade)
+
+            UIView.animate(withDuration: 0.25, animations: {
+                button.setImage(UIImage(systemName: "chevron.up"), for: .selected)
+//                button.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            })
+            
+        } else if !button.isSelected {
+
+            indexOfExpendedCell = button.tag
+            shouldCellBeExpanded = false
+
+            self.detailTableView.reloadRows(at: [IndexPath(item: indexOfExpendedCell + 1, section: 1)], with: .fade)
+            
+            UIView.animate(withDuration: 0.25, animations: {
+                button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+//                button.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+            })
+            
+        }
+    }
+    
     
     // MARK: - Helper Functions
     
     func refineOptional() -> [String] {
         guard let actorName = actorName else { return [""] }
         return actorName
+    }
+    
+    func configureTableView() {
+        detailTableView.delegate = self
+        detailTableView.dataSource = self
+        detailTableView.register(UINib(nibName: DetailMovieTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: DetailMovieTableViewCell.identifier)
+        detailTableView.register(UINib(nibName: OverViewTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: OverViewTableViewCell.identifier)
+    }
+    
+    
+    func configureNavi() {
+        
+//        let barAppearance = UINavigationBarAppearance()
+//        barAppearance.backgroundColor = .white
+//        navigationItem.scrollEdgeAppearance = barAppearance
+        
+        navigationItem.title = "출연 / 제작"
     }
 
 }
@@ -61,11 +113,43 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailMovieTableViewCell.identifier, for: indexPath) as? DetailMovieTableViewCell else { return UITableViewCell() }
-        
-        cell.mainLabel.text = refineOptional()[indexPath.row]
-        
-        return cell
+        switch indexPath.section {
+        case 1:
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: OverViewTableViewCell.identifier, for: indexPath) as? OverViewTableViewCell else { return UITableViewCell() }
+            
+            cell.overviewLabel.text = movieData?.overView
+            cell.overviewLabel.numberOfLines = 0
+            
+            cell.downButton.tag = indexPath.row
+            cell.downButton.addTarget(self, action: #selector(expandButtonAction(button:)), for: .touchUpInside)
+            
+            return cell
+            
+        default:
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailMovieTableViewCell.identifier, for: indexPath) as? DetailMovieTableViewCell else { return UITableViewCell() }
+            
+            cell.realNameLabel.text = refineOptional()[indexPath.row]
+            
+            cell.characterLabel.text = characterName[indexPath.row]
+            cell.characterLabel.textColor = .systemGray2
+            
+            if let profile = URL(string: actorProfile[indexPath.row]) {
+
+                DispatchQueue.global().async {
+                    let data = try? Data(contentsOf: profile)
+                    DispatchQueue.main.async {
+                        guard let data = data else { return }
+                        cell.profileImageView.image = UIImage(data: data)
+                    }
+                }
+                
+            }
+            
+            return cell
+        }
+
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -134,7 +218,6 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             
         }
         
-        
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -145,10 +228,28 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         }
 
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        switch indexPath.section {
+        case 1:
+            if shouldCellBeExpanded && indexPath.row == indexOfExpendedCell {
+                    return 200
+                } else { return 120 }
+        default:
+            return 130
+        }
 
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        detailTableView.deselectRow(at: indexPath, animated: true)
+    }
     
 }
 
+
+// MARK: - Extension: UIScrollViewDelegate
 
 extension DetailViewController: UIScrollViewDelegate {
     
@@ -166,9 +267,3 @@ extension DetailViewController: UIScrollViewDelegate {
     }
     
 }
-
-//extension DetailViewController: CustomHeaderDelegate {
-//    func customHeader(_ customHeader: HeaderTableView, didTapButtonInSection section: Int) {
-//        print("did tap button", section)
-//    }
-//}

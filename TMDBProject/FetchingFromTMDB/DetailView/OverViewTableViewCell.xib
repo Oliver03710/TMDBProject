@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OverViewTableViewCell" rowHeight="200" id="KGk-i7-Jjw" customClass="OverViewTableViewCell" customModule="TMDBProject" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="423" height="200"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="423" height="200"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K3Q-f5-NnZ">
+                        <rect key="frame" x="30" y="11" width="363" height="149"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GNf-dA-FMx">
+                        <rect key="frame" x="195.5" y="170" width="32" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="32" id="AUJ-c5-HJ5"/>
+                            <constraint firstAttribute="height" constant="20" id="tMf-Xc-PjA"/>
+                        </constraints>
+                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="chevron.down" catalog="system"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="K3Q-f5-NnZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="F8q-tG-D0F"/>
+                    <constraint firstItem="GNf-dA-FMx" firstAttribute="top" secondItem="K3Q-f5-NnZ" secondAttribute="bottom" constant="10" id="YAh-ZW-9LD"/>
+                    <constraint firstAttribute="trailing" secondItem="K3Q-f5-NnZ" secondAttribute="trailing" constant="30" id="bn2-36-98V"/>
+                    <constraint firstAttribute="bottom" secondItem="GNf-dA-FMx" secondAttribute="bottom" constant="10" id="hfO-QU-fa5"/>
+                    <constraint firstItem="GNf-dA-FMx" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="oTk-W8-574"/>
+                    <constraint firstItem="K3Q-f5-NnZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="30" id="rWj-IQ-a5g"/>
+                    <constraint firstItem="K3Q-f5-NnZ" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="xlv-PJ-vax"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="downButton" destination="GNf-dA-FMx" id="SbU-oa-2d9"/>
+                <outlet property="overviewLabel" destination="K3Q-f5-NnZ" id="uxI-DX-vdy"/>
+            </connections>
+            <point key="canvasLocation" x="89.130434782608702" y="139.28571428571428"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="chevron.down" catalog="system" width="128" height="72"/>
+    </resources>
+</document>

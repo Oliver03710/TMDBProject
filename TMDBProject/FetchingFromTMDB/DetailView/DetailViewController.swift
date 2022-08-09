@@ -19,6 +19,10 @@ class DetailViewController: UIViewController {
     var characterName: [String] = []
     var actorProfile: [String] = []
     
+    var crewName: [String]?
+    var crewDepartment: [String] = []
+    var crewProfile: [String] = []
+    
     var shouldCellBeExpanded: Bool = false
     var indexOfExpendedCell: Int = 0
     
@@ -73,6 +77,11 @@ class DetailViewController: UIViewController {
         return actorName
     }
     
+    func refineCrewOptional() -> [String] {
+        guard let crewName = actorName else { return [""] }
+        return crewName
+    }
+    
     func configureTableView() {
         detailTableView.delegate = self
         detailTableView.dataSource = self
@@ -98,16 +107,16 @@ class DetailViewController: UIViewController {
 extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         switch section {
-        case 0: return 0
         case 1: return 1
-        default:
-            return refineOptional().count
+        case 2: return refineOptional().count
+        case 3: return refineCrewOptional().count
+        default: return 0
         }
     }
     
@@ -126,7 +135,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             
             return cell
             
-        default:
+        case 2:
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailMovieTableViewCell.reusableIdentifier, for: indexPath) as? DetailMovieTableViewCell else { return UITableViewCell() }
             
@@ -148,8 +157,34 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
             return cell
-        }
+            
+        case 3:
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailMovieTableViewCell.reusableIdentifier, for: indexPath) as? DetailMovieTableViewCell else { return UITableViewCell() }
 
+            cell.realNameLabel.text = refineOptional()[indexPath.row]
+            
+            cell.characterLabel.text = characterName[indexPath.row]
+            cell.characterLabel.textColor = .systemGray2
+            
+            if let profile = URL(string: actorProfile[indexPath.row]) {
+
+                DispatchQueue.global().async {
+                    let data = try? Data(contentsOf: profile)
+                    DispatchQueue.main.async {
+                        guard let data = data else { return }
+                        cell.profileImageView.image = UIImage(data: data)
+                    }
+                }
+                
+            }
+            
+            return cell
+            
+        default:
+            break
+        }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

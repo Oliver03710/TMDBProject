@@ -33,9 +33,7 @@ class MainTableViewCell: UITableViewCell {
         
         movieCollectionView.backgroundColor = .systemGray2
         movieCollectionView.collectionViewLayout = collectionViewLayout()
-        movieCollectionView.delegate = self
-        movieCollectionView.dataSource = self
-        movieCollectionView.register(UINib(nibName: PosterCollectionViewCell.reusableIdentifier, bundle: nil), forCellWithReuseIdentifier: PosterCollectionViewCell.reusableIdentifier)
+
     }
     
     func collectionViewLayout() -> UICollectionViewFlowLayout {
@@ -51,19 +49,5 @@ class MainTableViewCell: UITableViewCell {
 }
 
 
-extension MainTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.reusableIdentifier, for: indexPath) as? PosterCollectionViewCell else { return UICollectionViewCell() }
-        
-        
-        return cell
-    }
-    
-    
-}
+
  

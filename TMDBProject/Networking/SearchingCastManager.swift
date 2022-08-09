@@ -16,7 +16,7 @@ class SearchingCastManager {
     
     static let shared = SearchingCastManager()
     
-    typealias completionHandler = (ActorData) -> Void
+    typealias completionHandler = (ActorData, CrewData) -> Void
     
     func fetchingActorData(movieID: Int, completionHandler: @escaping completionHandler) {
         
@@ -33,9 +33,15 @@ class SearchingCastManager {
                 let profile = json["cast"].arrayValue.map { $0["profile_path"].stringValue }
                     .map { "https://image.tmdb.org/t/p/original" + $0 }
                 
+                let crewName = json["crew"].arrayValue.map { $0["name"].stringValue }
+                let crewDepartment = json["crew"].arrayValue.map { $0["department"].stringValue }
+                let crewProfile = json["crew"].arrayValue.map { $0["profile_path"].stringValue }
+                    .map { "https://image.tmdb.org/t/p/original" + $0 }
+                
                 let data = ActorData(name: name, character: character, profile: profile)
+                let crewData = CrewData(name: crewName, department: crewDepartment, profile: crewProfile)
                 print(data)
-                completionHandler(data)
+                completionHandler(data, crewData)
                 
             case .failure(let error):
                 print(error)

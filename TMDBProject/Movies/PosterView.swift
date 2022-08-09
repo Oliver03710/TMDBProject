@@ -12,6 +12,7 @@ class PosterView: UIView {
     // MARK: - Properties
     
     @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var testLabel: UILabel!
     
     
     // MARK: - Init

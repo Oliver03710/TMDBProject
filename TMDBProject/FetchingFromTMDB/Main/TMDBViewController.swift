@@ -23,6 +23,11 @@ class TMDBViewController: UIViewController {
     var actorName: [Int: [String]] = [:]
     var characterName: [Int: [String]] = [:]
     var actorProfile: [Int: [String]] = [:]
+    
+    var crewName: [Int: [String]] = [:]
+    var crewDepartment: [Int: [String]] = [:]
+    var crewProfile: [Int: [String]] = [:]
+    
     var movieLink: String = ""
     
     var pages = 1
@@ -105,11 +110,15 @@ class TMDBViewController: UIViewController {
         
         for item in 0..<self.movieList.count {
             
-            SearchingCastManager.shared.fetchingActorData(movieID: self.movieList[item].movieId) { actorData in
+            SearchingCastManager.shared.fetchingActorData(movieID: self.movieList[item].movieId) { actorData, crewData in
                 
                 self.actorName.updateValue(actorData.name, forKey: self.movieList[item].movieId)
                 self.characterName.updateValue(actorData.character, forKey: self.movieList[item].movieId)
                 self.actorProfile.updateValue(actorData.profile, forKey: self.movieList[item].movieId)
+                
+                self.crewName.updateValue(crewData.name, forKey: self.movieList[item].movieId)
+                self.crewDepartment.updateValue(crewData.department, forKey: self.movieList[item].movieId)
+                self.crewProfile.updateValue(crewData.profile, forKey: self.movieList[item].movieId)
                 
                 DispatchQueue.main.async {
                     self.tmdbCollectionView.reloadData()
@@ -262,6 +271,11 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
         vc.actorName = name
         vc.characterName = character
         vc.actorProfile = profile
+        
+        guard let crewName = crewName[movieList[indexPath.section].movieId], let department = crewDepartment[movieList[indexPath.section].movieId], let crewProfile = crewProfile[movieList[indexPath.section].movieId] else { return }
+        vc.actorName = crewName
+        vc.characterName = department
+        vc.actorProfile = crewProfile
         
         hud.dismiss(afterDelay: 0.5)
         

@@ -28,9 +28,11 @@ struct ActorData {
     
 }
 
-struct TMDBCrew {
+struct CrewData {
     
-    let name: String
+    let name: [String]
+    let department: [String]
+    let profile: [String]
     
 }
 

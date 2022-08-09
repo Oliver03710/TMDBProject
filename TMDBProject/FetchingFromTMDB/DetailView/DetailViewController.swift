@@ -76,8 +76,8 @@ class DetailViewController: UIViewController {
     func configureTableView() {
         detailTableView.delegate = self
         detailTableView.dataSource = self
-        detailTableView.register(UINib(nibName: DetailMovieTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: DetailMovieTableViewCell.identifier)
-        detailTableView.register(UINib(nibName: OverViewTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: OverViewTableViewCell.identifier)
+        detailTableView.register(UINib(nibName: DetailMovieTableViewCell.reusableIdentifier, bundle: nil), forCellReuseIdentifier: DetailMovieTableViewCell.reusableIdentifier)
+        detailTableView.register(UINib(nibName: OverViewTableViewCell.reusableIdentifier, bundle: nil), forCellReuseIdentifier: OverViewTableViewCell.reusableIdentifier)
     }
     
     
@@ -116,7 +116,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.section {
         case 1:
             
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: OverViewTableViewCell.identifier, for: indexPath) as? OverViewTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: OverViewTableViewCell.reusableIdentifier, for: indexPath) as? OverViewTableViewCell else { return UITableViewCell() }
             
             cell.overviewLabel.text = movieData?.overView
             cell.overviewLabel.numberOfLines = 0
@@ -128,7 +128,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             
         default:
             
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailMovieTableViewCell.identifier, for: indexPath) as? DetailMovieTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailMovieTableViewCell.reusableIdentifier, for: indexPath) as? DetailMovieTableViewCell else { return UITableViewCell() }
             
             cell.realNameLabel.text = refineOptional()[indexPath.row]
             

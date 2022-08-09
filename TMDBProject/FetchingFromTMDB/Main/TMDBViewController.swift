@@ -8,6 +8,7 @@
 import UIKit
 
 import Alamofire
+import JGProgressHUD
 import Kingfisher
 import SwiftyJSON
 
@@ -26,6 +27,7 @@ class TMDBViewController: UIViewController {
     
     var pages = 1
     var totalPages = 0
+    let hud = JGProgressHUD()
     
     
     // MARK: - Init
@@ -43,8 +45,10 @@ class TMDBViewController: UIViewController {
     
     @objc func moveToYouTube(sender: UIButton) {
         
+        hud.textLabel.text = "Loading"
+        hud.show(in: self.view)
         fetchingMovieLinkData(num: movieList[sender.tag].movieId)
-        
+        hud.dismiss(afterDelay: 0.5)
     }
     
     
@@ -73,7 +77,7 @@ class TMDBViewController: UIViewController {
         tmdbCollectionView.prefetchDataSource = self
         tmdbCollectionView.delegate = self
         tmdbCollectionView.dataSource = self
-        tmdbCollectionView.register(UINib(nibName: TMDBCollectionViewCell.identifier, bundle: nil), forCellWithReuseIdentifier: TMDBCollectionViewCell.identifier)
+        tmdbCollectionView.register(UINib(nibName: TMDBCollectionViewCell.reusableIdentifier, bundle: nil), forCellWithReuseIdentifier: TMDBCollectionViewCell.reusableIdentifier)
         tmdbCollectionView.register(UINib(nibName: "HeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderReusableView")
     }
     
@@ -124,7 +128,7 @@ class TMDBViewController: UIViewController {
                 
                 let sb = UIStoryboard(name: "Main", bundle: nil)
                 
-                guard let vc = sb.instantiateViewController(withIdentifier: WebViewSearchController.identifier) as? WebViewSearchController else { return }
+                guard let vc = sb.instantiateViewController(withIdentifier: WebViewSearchController.reusableIdentifier) as? WebViewSearchController else { return }
                 
                 vc.destinationURL = self.movieLink
                 
@@ -175,7 +179,7 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TMDBCollectionViewCell.identifier, for: indexPath) as? TMDBCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TMDBCollectionViewCell.reusableIdentifier, for: indexPath) as? TMDBCollectionViewCell else { return UICollectionViewCell() }
         
         cell.movieImageView.kf.setImage(with: URL(string: movieList[indexPath.section].mainImage))
         cell.movieImageView.contentMode = .scaleAspectFill
@@ -245,10 +249,12 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         tmdbCollectionView.deselectItem(at: indexPath, animated: true)
+        hud.textLabel.text = "Loading"
+        hud.show(in: self.view)
         
         let sb = UIStoryboard(name: "Main", bundle: nil)
         
-        guard let vc = sb.instantiateViewController(withIdentifier: DetailViewController.identifier) as? DetailViewController else { return }
+        guard let vc = sb.instantiateViewController(withIdentifier: DetailViewController.reusableIdentifier) as? DetailViewController else { return }
         
         vc.movieData = movieList[indexPath.section]
     
@@ -256,6 +262,8 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
         vc.actorName = name
         vc.characterName = character
         vc.actorProfile = profile
+        
+        hud.dismiss(afterDelay: 0.5)
         
         self.navigationController?.pushViewController(vc, animated: true)
     }

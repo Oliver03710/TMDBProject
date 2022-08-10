@@ -20,6 +20,13 @@ struct MovieData {
     
 }
 
+struct SecondMovieData {
+    
+    let title: String
+    let movieId: Int
+    
+}
+
 struct ActorData {
     
     let name: [String]
@@ -36,4 +43,8 @@ struct CrewData {
     
 }
 
-
+struct SimilarMovies {
+    
+    let poster: String
+    
+}

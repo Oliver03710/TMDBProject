@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Kingfisher
+
 class MovieViewController: UIViewController {
     
     // MARK: - Properties
@@ -23,6 +25,11 @@ class MovieViewController: UIViewController {
         [Int](45...50)
     ]
     
+    var movieList: [SecondMovieData] = []
+    var similarMovieList: [[SimilarMovies]] = []
+    var pages = 1
+    var totalPageNum = 0
+
     
     // MARK: - Init
     
@@ -30,8 +37,29 @@ class MovieViewController: UIViewController {
         super.viewDidLoad()
         mainTableView.delegate = self
         mainTableView.dataSource = self
-        
+        fetchingMovieData(num: pages)
     }
+    
+    
+    // MARK: - Networking
+
+    func fetchingMovieData(num: Int) {
+        
+        SearchingMovieManager.shared.fetchSecondMovieData(startPage: num) { data, similarMovies in
+            
+            self.movieList = data
+            self.similarMovieList = similarMovies
+            
+            dump(self.movieList)
+            dump(self.similarMovieList)
+            
+            DispatchQueue.main.async {
+                self.mainTableView.reloadData()
+                
+            }
+        }
+    }
+    
 }
 
 
@@ -40,7 +68,7 @@ class MovieViewController: UIViewController {
 extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return numberList.count
+        return movieList.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -51,12 +79,13 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reusableIdentifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
         
-        cell.backgroundColor = .green
+        cell.backgroundColor = .black
         cell.movieCollectionView.tag = indexPath.section
         cell.movieCollectionView.delegate = self
         cell.movieCollectionView.dataSource = self
         cell.movieCollectionView.register(UINib(nibName: PosterCollectionViewCell.reusableIdentifier, bundle: nil), forCellWithReuseIdentifier: PosterCollectionViewCell.reusableIdentifier)
         cell.movieCollectionView.reloadData()
+        cell.titleLabel.text = "\(movieList[indexPath.section].title), 이 영화와 비슷한 컨텐츠"
         
         return cell
     }
@@ -74,7 +103,7 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
 extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return numberList[collectionView.tag].count
+        return similarMovieList[collectionView.tag].count
         
     }
     
@@ -82,8 +111,9 @@ extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSou
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.reusableIdentifier, for: indexPath) as? PosterCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.posterView.testLabel.text = "\(numberList[collectionView.tag][indexPath.item])"
-        print(indexPath.item)
+        let url = URL(string: similarMovieList[collectionView.tag][indexPath.item].poster)
+        cell.posterView.posterImageView.kf.setImage(with: url)
+        collectionView.reloadData()
         
         return cell
     }

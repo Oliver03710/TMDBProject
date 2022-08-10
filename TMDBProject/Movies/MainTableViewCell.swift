@@ -27,12 +27,14 @@ class MainTableViewCell: UITableViewCell {
     
     func setUI() {
         
-        titleLabel.font = .boldSystemFont(ofSize: 32)
-        titleLabel.textColor = .blue
-        titleLabel.backgroundColor = .systemYellow
+        titleLabel.font = .boldSystemFont(ofSize: 16)
+        titleLabel.textColor = .white
+        titleLabel.backgroundColor = .clear
         
-        movieCollectionView.backgroundColor = .systemGray2
+        movieCollectionView.backgroundColor = .black
         movieCollectionView.collectionViewLayout = collectionViewLayout()
+        
+        self.backgroundColor = .black
 
     }
     

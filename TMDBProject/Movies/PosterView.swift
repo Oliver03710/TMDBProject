@@ -11,9 +11,7 @@ class PosterView: UIView {
     
     // MARK: - Properties
     
-    @IBOutlet weak var posterImageView: UIImageView!
-    @IBOutlet weak var testLabel: UILabel!
-    
+    @IBOutlet weak var posterImageView: UIImageView!    
     
     // MARK: - Init
     
@@ -28,7 +26,7 @@ class PosterView: UIView {
     func setUI() {
         guard let view = UINib(nibName: "PosterView", bundle: nil).instantiate(withOwner: self).first as? UIView else { return }
         
-        view.backgroundColor = .red
+        view.backgroundColor = .clear
         view.frame = bounds
         self.addSubview(view)
         

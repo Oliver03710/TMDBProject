@@ -54,5 +54,103 @@ class SearchingMovieManager {
             }
         }
     }
+    
+    func fetchSecondMovieData(startPage: Int, completionHandler: @escaping ([SecondMovieData], [[SimilarMovies]]) -> ()) {
+        
+        let url = EndPoint.TMDBUrl + "trending/\(MediaType.movie.rawValue)/\(TimeWindow.day.rawValue)?api_key=\(APIKey.TMDB.rawValue)&page=\(startPage)"
+        
+        AF.request(url, method: .get).validate(statusCode: 200..<400).responseData(queue: .global()) { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+//                print("JSON: \(json)")
+                
+                let movieArr = json["results"].arrayValue.shuffled()[0..<5]
+                let title = movieArr.map { $0["title"].stringValue }
+                let movieId = movieArr.map { $0["id"].intValue }
+               
+                var data: [SecondMovieData] = []
+                
+                for i in 0..<title.count {
+                    
+                    data.append(SecondMovieData(title: title[i], movieId: movieId[i]))
+                }
+                
+                var similarMoviePosters: [[SimilarMovies]] = []
+                
+                self.fetchSimilarMovieData(startPage: startPage, movieID: movieId[0]) { movie in
+                    similarMoviePosters.append(movie)
+
+                    self.fetchSimilarMovieData(startPage: startPage, movieID: movieId[1]) { movie in
+                        similarMoviePosters.append(movie)
+                        
+                        self.fetchSimilarMovieData(startPage: startPage, movieID: movieId[2]) { movie in
+                            similarMoviePosters.append(movie)
+                            
+                            self.fetchSimilarMovieData(startPage: startPage, movieID: movieId[3]) { movie in
+                                similarMoviePosters.append(movie)
+                                
+                                self.fetchSimilarMovieData(startPage: startPage, movieID: movieId[4]) { movie in
+                                    similarMoviePosters.append(movie)
+                                    
+                                    completionHandler(data, similarMoviePosters)
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+                
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func fetchSimilarMovieData(startPage: Int, movieID: Int, completionHandler: @escaping ([SimilarMovies]) -> ()) {
+        
+        let url = "\(EndPoint.TMDBUrl)movie/\(movieID)/recommendations?api_key=\(APIKey.TMDB.rawValue)&language=en-US&page=\(startPage)"
+        
+        AF.request(url, method: .get).validate(statusCode: 200..<400).responseData(queue: .global()) { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+//                print("JSON: \(json)")
+                
+                var data: [SimilarMovies] = []
+                
+                if json["results"].arrayValue.count < 10 {
+                    
+                    let moviePoster = json["results"].arrayValue.map { $0["poster_path"].stringValue }
+                    
+                    for i in 0..<moviePoster.count {
+                        
+                        data.append(SimilarMovies(poster: moviePoster[i]))
+                    }
+                    
+                } else {
+                    
+                    let moviePoster = json["results"].arrayValue.shuffled()
+                    let posters = moviePoster[0..<10]
+                    
+                    let movie = posters.map { $0["poster_path"].stringValue }
+                        .map { "https://image.tmdb.org/t/p/original" + $0 }
+                    
+                    for i in 0..<movie.count {
+                        
+                        data.append(SimilarMovies(poster: movie[i]))
+                    }
+                }
+                
+                
+                
+                completionHandler(data)
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 
 }

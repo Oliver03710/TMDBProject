@@ -10,7 +10,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PosterView" customModule="TMDBProject" customModuleProvider="target">
             <connections>
                 <outlet property="posterImageView" destination="wTR-Lp-hRn" id="zZB-dT-CUk"/>
-                <outlet property="testLabel" destination="WjK-J8-bY9" id="l7B-8C-F1d"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -21,19 +20,11 @@
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wTR-Lp-hRn">
                     <rect key="frame" x="0.0" y="0.0" width="153" height="213"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WjK-J8-bY9">
-                    <rect key="frame" x="55.5" y="96" width="42" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="wTR-Lp-hRn" secondAttribute="trailing" id="GVa-Md-GSA"/>
-                <constraint firstItem="WjK-J8-bY9" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Ohk-0W-ZZV"/>
                 <constraint firstAttribute="bottom" secondItem="wTR-Lp-hRn" secondAttribute="bottom" id="SDP-gz-QIJ"/>
-                <constraint firstItem="WjK-J8-bY9" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="s8H-8B-J1g"/>
                 <constraint firstItem="wTR-Lp-hRn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="t3k-2g-PWX"/>
                 <constraint firstItem="wTR-Lp-hRn" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="veT-8U-UBA"/>
             </constraints>

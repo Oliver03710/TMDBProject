@@ -28,7 +28,7 @@ class PosterCollectionViewCell: UICollectionViewCell {
     func setUI() {
         posterView.posterImageView.image = UIImage(systemName: "applelogo")
         posterView.backgroundColor = .clear
-        posterView.posterImageView.backgroundColor = .systemGray5
+        posterView.posterImageView.backgroundColor = .clear
         posterView.posterImageView.layer.cornerRadius = 10
         
     }

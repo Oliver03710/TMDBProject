@@ -26,7 +26,7 @@ class SearchingYouTubeManager {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                print("JSON: \(json)")
+//                print("JSON: \(json)")
 
                 let link = "https://www.youtube.com/watch?v=\(json["results"][0]["key"].stringValue)"
 

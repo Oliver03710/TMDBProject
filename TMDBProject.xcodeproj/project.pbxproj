@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		AD154B49289D004700D6779C /* SearchingMovieManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD154B48289D004700D6779C /* SearchingMovieManager.swift */; };
 		AD154B4B289D260000D6779C /* SearchingCastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD154B4A289D260000D6779C /* SearchingCastManager.swift */; };
+		AD3B5A7528A4EAC8009B5E9A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3B5A7428A4EAC8009B5E9A /* MapViewController.swift */; };
+		AD3B5A7728A4F9F3009B5E9A /* TheaterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3B5A7628A4F9F3009B5E9A /* TheaterData.swift */; };
 		AD6702D82899F6C80049E2E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6702D72899F6C80049E2E8 /* AppDelegate.swift */; };
 		AD6702DA2899F6C80049E2E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6702D92899F6C80049E2E8 /* SceneDelegate.swift */; };
 		AD6702DF2899F6C80049E2E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AD6702DD2899F6C80049E2E8 /* Main.storyboard */; };
@@ -52,6 +54,8 @@
 /* Begin PBXFileReference section */
 		AD154B48289D004700D6779C /* SearchingMovieManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingMovieManager.swift; sourceTree = "<group>"; };
 		AD154B4A289D260000D6779C /* SearchingCastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingCastManager.swift; sourceTree = "<group>"; };
+		AD3B5A7428A4EAC8009B5E9A /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		AD3B5A7628A4F9F3009B5E9A /* TheaterData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheaterData.swift; sourceTree = "<group>"; };
 		AD6702D42899F6C80049E2E8 /* TMDBProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TMDBProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD6702D72899F6C80049E2E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD6702D92899F6C80049E2E8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -162,8 +166,10 @@
 		AD7827C5289E414400E52C9B /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				AD6702DD2899F6C80049E2E8 /* Main.storyboard */,
 				ADF00880289A6A5A00849163 /* TMDBCollectionViewCell.xib */,
 				AD6C0D4F289AB36200BC54D3 /* HeaderReusableView.xib */,
+				AD3B5A7428A4EAC8009B5E9A /* MapViewController.swift */,
 				ADF00873289A685E00849163 /* TMDBViewController.swift */,
 				ADF0087F289A6A5A00849163 /* TMDBCollectionViewCell.swift */,
 				AD7827C7289E432400E52C9B /* HeaderReusableView.swift */,
@@ -198,7 +204,7 @@
 				ADD8D3B6289EAB82003BEFEB /* DateHelper.swift */,
 				ADF0088B289A733800849163 /* TMDBData.swift */,
 				AD6C0D4C289AB15F00BC54D3 /* HeaderCollectionViewFlowLayout.swift */,
-				AD6702DD2899F6C80049E2E8 /* Main.storyboard */,
+				AD3B5A7628A4F9F3009B5E9A /* TheaterData.swift */,
 				AD7827C5289E414400E52C9B /* Main */,
 				AD7827C6289E41F800E52C9B /* DetailView */,
 			);
@@ -346,7 +352,9 @@
 				ADF0088A289A6E7100849163 /* UIViewController+Extension.swift in Sources */,
 				ADFC50B928A247A0000E1B6B /* PosterView.swift in Sources */,
 				ADF00887289A6D7000849163 /* Identifier+Protocol.swift in Sources */,
+				AD3B5A7728A4F9F3009B5E9A /* TheaterData.swift in Sources */,
 				ADF00881289A6A5A00849163 /* TMDBCollectionViewCell.swift in Sources */,
+				AD3B5A7528A4EAC8009B5E9A /* MapViewController.swift in Sources */,
 				ADD8D3B7289EAB82003BEFEB /* DateHelper.swift in Sources */,
 				AD6C0D4D289AB15F00BC54D3 /* HeaderCollectionViewFlowLayout.swift in Sources */,
 				ADD8D3B9289EAC35003BEFEB /* GenreHelper.swift in Sources */,
@@ -504,7 +512,7 @@
 				INFOPLIST_FILE = TMDBProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Movies;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -534,7 +542,7 @@
 				INFOPLIST_FILE = TMDBProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Movies;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;

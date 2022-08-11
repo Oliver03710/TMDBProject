@@ -91,7 +91,7 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 250
+        return 300
     }
     
     
@@ -100,7 +100,9 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - Extension: UICollectionViewDelegate, UICollectionViewDataSource
 
-extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+// UICollectionViewDelegateFlowLayout: sizeForItemAt - 개별 아이템을 역동적으로 높이 변경
+extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return similarMovieList[collectionView.tag].count

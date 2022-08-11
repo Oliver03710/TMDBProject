@@ -57,8 +57,13 @@ class TMDBViewController: UIViewController {
     }
     
     
-    @objc func doNothing() {
+    @objc func findTheater() {
         
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        
+        guard let vc = sb.instantiateViewController(withIdentifier: MapViewController.reusableIdentifier) as? MapViewController else { return }
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -67,13 +72,13 @@ class TMDBViewController: UIViewController {
     func configureNavi() {
         
         let barAppearance = UINavigationBarAppearance()
-        barAppearance.backgroundColor = .white
+        barAppearance.backgroundColor = .systemBackground
         navigationItem.scrollEdgeAppearance = barAppearance
         
         navigationItem.title = "MY MEDIA"
         self.navigationController?.navigationBar.tintColor = UIColor.systemBlue
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(doNothing))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "theatermasks.fill"), style: .plain, target: self, action: #selector(findTheater))
 
     }
     

@@ -41,7 +41,7 @@ class MainTableViewCell: UITableViewCell {
     func collectionViewLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: titleLabel.frame.width / 3, height: movieCollectionView.frame.height)
+        layout.itemSize = CGSize(width: 150, height: 200)
         layout.minimumLineSpacing = 16
         layout.minimumInteritemSpacing = 16
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)

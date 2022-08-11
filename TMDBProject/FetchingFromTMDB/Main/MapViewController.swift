@@ -42,31 +42,19 @@ class MapViewController: UIViewController {
             
         }
         
-        let megaBox = UIAlertAction(title: "메가박스", style: .default) { _ in
+        let lotteCinema = UIAlertAction(title: self.theaters.mapAnnotations[0].type, style: .default) { _ in
             
             self.removeAnnotations()
             
-            let region1 = MKCoordinateRegion(center: self.setCoordinates(latitude: self.theaters.mapAnnotations[0].latitude, longitude: self.theaters.mapAnnotations[0].longitude), latitudinalMeters: 2000, longitudinalMeters: 2000)
+            self.setRegionAndAnnotation(center: self.setCoordinates(latitude: self.theaters.mapAnnotations[0].latitude, longitude: self.theaters.mapAnnotations[0].longitude), annoTitle: self.theaters.mapAnnotations[0].location)
             
-            let region2 = MKCoordinateRegion(center: self.setCoordinates(latitude: self.theaters.mapAnnotations[1].latitude, longitude: self.theaters.mapAnnotations[1].longitude), latitudinalMeters: 2000, longitudinalMeters: 2000)
-            
-            self.mapView.setRegion(region1, animated: true)
-            
-            
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = region1.center
-            annotation.title = self.theaters.mapAnnotations[0].location
-            self.mapView.addAnnotation(annotation)
-            
-            let annotation2 = MKPointAnnotation()
-            annotation2.coordinate = region2.center
-            annotation2.title = self.theaters.mapAnnotations[1].location
-            self.mapView.addAnnotation(annotation2)
-            
+            self.setRegionAndAnnotation(center: self.setCoordinates(latitude: self.theaters.mapAnnotations[1].latitude, longitude: self.theaters.mapAnnotations[1].longitude), annoTitle: self.theaters.mapAnnotations[1].location)
+           
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
             
         }
-        let lotteCinema = UIAlertAction(title: "롯데시네마", style: .default) { _ in
+        
+        let megaBox = UIAlertAction(title: self.theaters.mapAnnotations[2].type, style: .default) { _ in
             
             self.removeAnnotations()
             
@@ -78,7 +66,7 @@ class MapViewController: UIViewController {
             
         }
         
-        let cgv = UIAlertAction(title: self.theaters.mapAnnotations[4].location, style: .default) { _ in
+        let cgv = UIAlertAction(title: self.theaters.mapAnnotations[4].type, style: .default) { _ in
             
             self.removeAnnotations()
             
@@ -89,6 +77,7 @@ class MapViewController: UIViewController {
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
             
         }
+        
         let all = UIAlertAction(title: "전체보기", style: .default) { _ in
             
             self.removeAnnotations()
@@ -100,14 +89,12 @@ class MapViewController: UIViewController {
             self.mapView.showAnnotations(self.mapView.annotations, animated: true)
         }
         
-
-        
         
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         
         theaterKindsAlert.addAction(myLocation)
-        theaterKindsAlert.addAction(megaBox)
         theaterKindsAlert.addAction(lotteCinema)
+        theaterKindsAlert.addAction(megaBox)
         theaterKindsAlert.addAction(cgv)
         theaterKindsAlert.addAction(all)
         theaterKindsAlert.addAction(cancel)
@@ -148,7 +135,6 @@ class MapViewController: UIViewController {
         
         mapView.setRegion(region, animated: true)
         
-        
         let annotation = MKPointAnnotation()
         annotation.coordinate = center
         annotation.title = annoTitle
@@ -163,6 +149,26 @@ class MapViewController: UIViewController {
                 mapView.removeAnnotation(annotation)
             }
         }
+    }
+    
+    func showRequestLocationServiceAlert() {
+        
+      let requestLocationServiceAlert = UIAlertController(title: "위치정보 이용", message: "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요.", preferredStyle: .alert)
+        
+      let goSetting = UIAlertAction(title: "설정으로 이동", style: .destructive) { _ in
+
+          if let appSetting = URL(string: UIApplication.openSettingsURLString) {
+              UIApplication.shared.open(appSetting)
+          }
+          
+      }
+        
+      let cancel = UIAlertAction(title: "취소", style: .default)
+      requestLocationServiceAlert.addAction(cancel)
+      requestLocationServiceAlert.addAction(goSetting)
+      
+      present(requestLocationServiceAlert, animated: true, completion: nil)
+        
     }
     
 }
@@ -201,13 +207,29 @@ extension MapViewController {
         case .restricted, .denied:
             print("Denied, 아이폰 설정으로 유도")
             setRegionAndAnnotation(center: setCoordinates(latitude: nil, longitude: nil), annoTitle: "새싹 캠퍼스")
-            
+            showRequestLocationServiceAlert()
             
         case .authorizedWhenInUse:
             print("When In Use")
-            locationManager.startUpdatingLocation()
+            
+            self.removeAnnotations()
+            
+            self.theaters.mapAnnotations.forEach {
+                self.setRegionAndAnnotation(center: self.setCoordinates(latitude: $0.latitude, longitude: $0.longitude), annoTitle: $0.location)
+            }
+            
+            self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+            
         default:
             print("Default")
+            
+            self.removeAnnotations()
+            
+            self.theaters.mapAnnotations.forEach {
+                self.setRegionAndAnnotation(center: self.setCoordinates(latitude: $0.latitude, longitude: $0.longitude), annoTitle: $0.location)
+            }
+            
+            self.mapView.showAnnotations(self.mapView.annotations, animated: true)
         }
     }
     
@@ -222,7 +244,7 @@ extension MapViewController: MKMapViewDelegate {
         print(#function)
 //        locationManager.startUpdatingLocation()
     }
-    
+
 }
 
 
@@ -250,6 +272,5 @@ extension MapViewController: CLLocationManagerDelegate {
         print(#function)
         checkUserDeviceLocationServiceAuthorization()
     }
-
-
+    
 }

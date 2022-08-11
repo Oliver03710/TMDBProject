@@ -40,7 +40,7 @@ class SearchingCastManager {
                 
                 let data = ActorData(name: name, character: character, profile: profile)
                 let crewData = CrewData(name: crewName, department: crewDepartment, profile: crewProfile)
-                print(data)
+//                print(data)
                 completionHandler(data, crewData)
                 
             case .failure(let error):

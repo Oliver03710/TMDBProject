@@ -61,7 +61,7 @@ class TMDBViewController: UIViewController {
         
         let sb = UIStoryboard(name: "Main", bundle: nil)
         
-        guard let vc = sb.instantiateViewController(withIdentifier: MapViewController.reusableIdentifier) as? MapViewController else { return }
+        guard let vc = sb.instantiateViewController(withIdentifier: MapViewController.reuseIdentifier) as? MapViewController else { return }
         
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -87,7 +87,7 @@ class TMDBViewController: UIViewController {
         tmdbCollectionView.prefetchDataSource = self
         tmdbCollectionView.delegate = self
         tmdbCollectionView.dataSource = self
-        tmdbCollectionView.register(UINib(nibName: TMDBCollectionViewCell.reusableIdentifier, bundle: nil), forCellWithReuseIdentifier: TMDBCollectionViewCell.reusableIdentifier)
+        tmdbCollectionView.register(UINib(nibName: TMDBCollectionViewCell.reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: TMDBCollectionViewCell.reuseIdentifier)
         tmdbCollectionView.register(UINib(nibName: "HeaderReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "HeaderReusableView")
     }
     
@@ -142,7 +142,7 @@ class TMDBViewController: UIViewController {
                 
                 let sb = UIStoryboard(name: "Main", bundle: nil)
                 
-                guard let vc = sb.instantiateViewController(withIdentifier: WebViewSearchController.reusableIdentifier) as? WebViewSearchController else { return }
+                guard let vc = sb.instantiateViewController(withIdentifier: WebViewSearchController.reuseIdentifier) as? WebViewSearchController else { return }
                 
                 vc.destinationURL = self.movieLink
                 
@@ -193,7 +193,7 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TMDBCollectionViewCell.reusableIdentifier, for: indexPath) as? TMDBCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TMDBCollectionViewCell.reuseIdentifier, for: indexPath) as? TMDBCollectionViewCell else { return UICollectionViewCell() }
         
         cell.movieImageView.kf.setImage(with: URL(string: movieList[indexPath.section].mainImage))
         cell.movieImageView.contentMode = .scaleAspectFill
@@ -268,7 +268,7 @@ extension TMDBViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         let sb = UIStoryboard(name: "Main", bundle: nil)
         
-        guard let vc = sb.instantiateViewController(withIdentifier: DetailViewController.reusableIdentifier) as? DetailViewController else { return }
+        guard let vc = sb.instantiateViewController(withIdentifier: DetailViewController.reuseIdentifier) as? DetailViewController else { return }
         
         vc.movieData = movieList[indexPath.section]
     

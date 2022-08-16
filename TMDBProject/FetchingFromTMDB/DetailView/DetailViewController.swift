@@ -7,6 +7,8 @@
 
 import UIKit
 
+import OLFramework
+
 class DetailViewController: UIViewController {
 
     // MARK: - Properties
@@ -85,8 +87,8 @@ class DetailViewController: UIViewController {
     func configureTableView() {
         detailTableView.delegate = self
         detailTableView.dataSource = self
-        detailTableView.register(UINib(nibName: DetailMovieTableViewCell.reusableIdentifier, bundle: nil), forCellReuseIdentifier: DetailMovieTableViewCell.reusableIdentifier)
-        detailTableView.register(UINib(nibName: OverViewTableViewCell.reusableIdentifier, bundle: nil), forCellReuseIdentifier: OverViewTableViewCell.reusableIdentifier)
+        detailTableView.register(UINib(nibName: DetailMovieTableViewCell.reuseIdentifier, bundle: nil), forCellReuseIdentifier: DetailMovieTableViewCell.reuseIdentifier)
+        detailTableView.register(UINib(nibName: OverViewTableViewCell.reuseIdentifier, bundle: nil), forCellReuseIdentifier: OverViewTableViewCell.reuseIdentifier)
     }
     
     
@@ -125,7 +127,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.section {
         case 1:
             
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: OverViewTableViewCell.reusableIdentifier, for: indexPath) as? OverViewTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: OverViewTableViewCell.reuseIdentifier, for: indexPath) as? OverViewTableViewCell else { return UITableViewCell() }
             
             cell.overviewLabel.text = movieData?.overView
             cell.overviewLabel.numberOfLines = 0
@@ -137,7 +139,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             
         case 2:
             
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailMovieTableViewCell.reusableIdentifier, for: indexPath) as? DetailMovieTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailMovieTableViewCell.reuseIdentifier, for: indexPath) as? DetailMovieTableViewCell else { return UITableViewCell() }
             
             cell.realNameLabel.text = refineOptional()[indexPath.row]
             
@@ -160,7 +162,7 @@ extension DetailViewController: UITableViewDelegate, UITableViewDataSource {
             
         case 3:
             
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailMovieTableViewCell.reusableIdentifier, for: indexPath) as? DetailMovieTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailMovieTableViewCell.reuseIdentifier, for: indexPath) as? DetailMovieTableViewCell else { return UITableViewCell() }
 
             cell.realNameLabel.text = refineOptional()[indexPath.row]
             

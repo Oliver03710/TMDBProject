@@ -8,6 +8,7 @@
 import UIKit
 
 import Kingfisher
+import OLFramework
 
 class MovieViewController: UIViewController {
     
@@ -77,13 +78,13 @@ extension MovieViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reusableIdentifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTableViewCell.reuseIdentifier, for: indexPath) as? MainTableViewCell else { return UITableViewCell() }
         
         cell.backgroundColor = .black
         cell.movieCollectionView.tag = indexPath.section
         cell.movieCollectionView.delegate = self
         cell.movieCollectionView.dataSource = self
-        cell.movieCollectionView.register(UINib(nibName: PosterCollectionViewCell.reusableIdentifier, bundle: nil), forCellWithReuseIdentifier: PosterCollectionViewCell.reusableIdentifier)
+        cell.movieCollectionView.register(UINib(nibName: PosterCollectionViewCell.reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: PosterCollectionViewCell.reuseIdentifier)
         cell.movieCollectionView.reloadData()
         cell.titleLabel.text = "\(movieList[indexPath.section].title), 이 영화와 비슷한 컨텐츠"
         
@@ -111,7 +112,7 @@ extension MovieViewController: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.reusableIdentifier, for: indexPath) as? PosterCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PosterCollectionViewCell.reuseIdentifier, for: indexPath) as? PosterCollectionViewCell else { return UICollectionViewCell() }
         
         let url = URL(string: similarMovieList[collectionView.tag][indexPath.item].poster)
         cell.posterView.posterImageView.kf.setImage(with: url)

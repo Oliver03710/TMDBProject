@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import OLFramework
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -13,10 +14,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        guard let scene = (scene as? UIWindowScene) else { return }
+        
+        window = UIWindow(windowScene: scene)
+        
+        if UserdefaultsHelper.standard.intro {
+            
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            guard let vc = sb.instantiateViewController(withIdentifier: "TMDBViewController") as? TMDBViewController else { return }
+            let nav = UINavigationController(rootViewController: vc)
+            window?.rootViewController = nav
+            
+        } else {
+            
+            let sb = UIStoryboard(name: "WalkThrough", bundle: nil)
+            guard let vc = sb.instantiateViewController(withIdentifier: "WalkThroughViewController") as? WalkThroughViewController else { return }
+            window?.rootViewController = vc
+        }
+        
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

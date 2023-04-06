@@ -23,5 +23,13 @@ extension UIViewController {
         collectionView.collectionViewLayout = layout
         
     }
-
+    
+    func transitionViewController<T: UIViewController>(storyboard: String, viewController vc: T.Type) {
+        
+        let sb = UIStoryboard(name: storyboard, bundle: nil)
+        guard let controller = sb.instantiateViewController(withIdentifier: String(describing: vc)) as? T else { return }
+//        self.present(controller, animated: true)
+        self.navigationController?.pushViewController(controller, animated: true)
+        
+    }
 }

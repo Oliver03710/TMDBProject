@@ -20,6 +20,7 @@ class WalkThroughPageViewController: UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        delegate = self
         dataSource = self
         if let startingViewController = showContentViewController(index: 0) {
             setViewControllers([startingViewController], direction: .forward, animated: true, completion: nil)
@@ -35,11 +36,11 @@ class WalkThroughPageViewController: UIPageViewController {
         }
         
         let storyboard = UIStoryboard(name: "WalkThrough", bundle: nil)
-        if let ContentVC = storyboard.instantiateViewController(withIdentifier: "ContentViewController") as? ContentViewController {
-            ContentVC.index = index
-            ContentVC.introString = pageIntro[index]
-            ContentVC.imageString = pageImages[index]
-            return ContentVC
+        if let contentVC = storyboard.instantiateViewController(withIdentifier: "ContentViewController") as? ContentViewController {
+            contentVC.index = index
+            contentVC.introString = pageIntro[index]
+            contentVC.imageString = pageImages[index]
+            return contentVC
         }
         
         return nil
@@ -58,6 +59,24 @@ class WalkThroughPageViewController: UIPageViewController {
 }
 
 
+// MARK: - Extension: UIPageViewControllerDelegate
+
+extension WalkThroughPageViewController: UIPageViewControllerDelegate {
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        
+        let storyboard = UIStoryboard(name: "WalkThrough", bundle: nil)
+        if let walkThroughVC = storyboard.instantiateViewController(withIdentifier: "WalkThroughViewController") as? WalkThroughViewController {
+            walkThroughVC.handler = {
+                walkThroughVC.currentPageIndex = self.currentPageIndex
+            }
+            
+            print(#function, "pageVC", currentPageIndex)
+        }
+    }
+    
+}
+
 // MARK: - Extension: UIPageViewControllerDataSource
 
 extension WalkThroughPageViewController: UIPageViewControllerDataSource {
@@ -66,6 +85,7 @@ extension WalkThroughPageViewController: UIPageViewControllerDataSource {
 
         var index = (viewController as! ContentViewController).index
         index -= 1
+        currentPageIndex -= 1
         return showContentViewController(index: index)
 
     }
@@ -74,6 +94,7 @@ extension WalkThroughPageViewController: UIPageViewControllerDataSource {
 
         var index = (viewController as! ContentViewController).index
         index += 1
+        currentPageIndex += 1
         return showContentViewController(index: index)
 
     }

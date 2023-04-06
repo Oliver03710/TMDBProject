@@ -3,7 +3,7 @@
 //  TMDBProject
 //
 //  Created by Junhee Yoon on 2022/08/04.
-//
+// 셀의 바운스 기능 해제 / 리로드 데이터를 해서 괜찮은지
 
 import UIKit
 
@@ -35,6 +35,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         configureNavi()
         configureTableView()
+//        detailTableView.scrollToRow(at: <#T##IndexPath#>, at: <#T##UITableView.ScrollPosition#>, animated: <#T##Bool#>)
     }
     
     

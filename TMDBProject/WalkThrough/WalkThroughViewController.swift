@@ -16,7 +16,8 @@ class WalkThroughViewController: UIViewController {
     @IBOutlet weak var pageControl: UIPageControl!
 
     var walkThroughPageViewController: WalkThroughPageViewController?
-    
+    var currentPageIndex: Int?
+    var handler: (() -> ())?
     
     // MARK: - Init
     
@@ -24,6 +25,26 @@ class WalkThroughViewController: UIViewController {
         super.viewDidLoad()
         configureNextButton()
         configureSkipButton()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(#function, "contentView")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print(#function, "contentView")
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        print(#function, "contentView")
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        print(#function, "contentView")
     }
     
     
@@ -71,28 +92,44 @@ class WalkThroughViewController: UIViewController {
             }
         }
         
-        if let index = walkThroughPageViewController?.currentPageIndex {
-            switch index {
-            case 0...1:
-                walkThroughPageViewController?.nextPages()
-            case 2:
-                
-                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                
-                let sb = UIStoryboard(name: "Main", bundle: nil)
-                guard let vc = sb.instantiateViewController(withIdentifier: "TMDBViewController") as? TMDBViewController else { return }
-                let nav = UINavigationController(rootViewController: vc)
-                
-                sceneDelegate?.window?.rootViewController = nav
-                sceneDelegate?.window?.makeKeyAndVisible()
-                
-            default:
-                break
-            }
+        switch pageControl.currentPage {
+        case 0...1:
+            walkThroughPageViewController?.nextPages()
+            pageControl.currentPage += 1
+        case 2:
+            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            let sceneDelegate = windowScene?.delegate as? SceneDelegate
             
-            pageControl.currentPage = index + 1
+            let sb = UIStoryboard(name: "Main", bundle: nil)
+            guard let vc = sb.instantiateViewController(withIdentifier: "TMDBViewController") as? TMDBViewController else { return }
+            let nav = UINavigationController(rootViewController: vc)
+            
+            sceneDelegate?.window?.rootViewController = nav
+            sceneDelegate?.window?.makeKeyAndVisible()
+        default: break
         }
+//        if let index = walkThroughPageViewController?.currentPageIndex {
+//            switch index {
+//            case 0...1:
+//                walkThroughPageViewController?.nextPages()
+//            case 2:
+//
+//                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+//                let sceneDelegate = windowScene?.delegate as? SceneDelegate
+//
+//                let sb = UIStoryboard(name: "Main", bundle: nil)
+//                guard let vc = sb.instantiateViewController(withIdentifier: "TMDBViewController") as? TMDBViewController else { return }
+//                let nav = UINavigationController(rootViewController: vc)
+//
+//                sceneDelegate?.window?.rootViewController = nav
+//                sceneDelegate?.window?.makeKeyAndVisible()
+//
+//            default:
+//                break
+//            }
+//
+//            pageControl.currentPage = index + 1
+//        }
     }
     
     

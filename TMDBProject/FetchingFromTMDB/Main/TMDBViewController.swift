@@ -59,11 +59,13 @@ class TMDBViewController: UIViewController {
     
     @objc func findTheater() {
         
-        let sb = UIStoryboard(name: "Main", bundle: nil)
+//        let sb = UIStoryboard(name: "Main", bundle: nil)
+//
+//        guard let vc = sb.instantiateViewController(withIdentifier: MapViewController.reuseIdentifier) as? MapViewController else { return }
         
-        guard let vc = sb.instantiateViewController(withIdentifier: MapViewController.reuseIdentifier) as? MapViewController else { return }
+        transitionViewController(storyboard: "Main", viewController: MapViewController.self)
         
-        self.navigationController?.pushViewController(vc, animated: true)
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
